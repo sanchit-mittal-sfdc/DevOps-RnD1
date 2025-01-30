@@ -1,0 +1,11 @@
+name: Salesforce CI CD Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Print Hello world"
+        run: echo "Hello world!!!"
