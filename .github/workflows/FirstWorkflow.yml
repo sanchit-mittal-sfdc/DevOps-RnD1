@@ -29,4 +29,4 @@ jobs:
           echo Test level is ${{github.event.inputs.test_level}}
 
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
