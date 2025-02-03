@@ -28,7 +28,6 @@ jobs:
           echo Name is ${{github.event.inputs.name}}
           echo Test level is ${{github.event.inputs.test_level}}
           # git status - this will throw error
-          say "hello ${{github.event.inputs.name}}"
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -37,4 +36,3 @@ jobs:
         run: |
           git status
           git branch
-          say "Code checkout completed"
