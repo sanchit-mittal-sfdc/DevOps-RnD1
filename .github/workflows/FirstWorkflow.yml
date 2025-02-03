@@ -30,7 +30,7 @@ jobs:
           echo Name is ${{github.event.inputs.name}}
           echo Test level is ${{github.event.inputs.test_level}}
           echo github actor is ${{github.actor}}
-          # git status - this will throw error
+        # git status - this will throw error
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -47,5 +47,4 @@ jobs:
       - name: do random stuff
         run: |
           echo "lets print the github object!"
-          # echo ${{toJson(github)}} dont know why this step is pinting but also giving error so i'm commenting this step
  
