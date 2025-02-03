@@ -1,6 +1,7 @@
 name: Github Workflow1
 
 on:
+  push:
   workflow_dispatch:
     inputs:
       name:
@@ -19,6 +20,7 @@ on:
 
 
 jobs:
+
   PrintValues:
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
@@ -33,7 +35,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: tun git status after code checkout
+      - name: run git status after code checkout
         run: |
           git status
           git branch
+
+  jobtwo:
+    needs: PrintValues
+    runs-on: ubuntu-latest
+    steps:
+      - name: do random stuff
+        run: |
+          echo "lets print the github object!"
+          echo ${{toJson(github)}}
