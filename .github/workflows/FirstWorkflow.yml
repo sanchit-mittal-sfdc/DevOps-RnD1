@@ -27,7 +27,7 @@ jobs:
         run: |
           echo Name is ${{github.event.inputs.name}}
           echo Test level is ${{github.event.inputs.test_level}}
-          git status
+          # git status - this will throw error
           say "hello ${{github.event.inputs.name}}"
 
       - name: Checkout code
