@@ -14,4 +14,5 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v4
+      - name: Greet the input user  
         run: echo Hello ${{github.event.inputs.name}}
