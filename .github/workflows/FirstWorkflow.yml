@@ -1,18 +1,32 @@
-name: This is the name of workflow/github action
+name: Github Workflow1
 
 on:
   workflow_dispatch:
     inputs:
       name:
-        description: 'Name of the person to greet'
+        description: Name of the person to greet
         required: true
-        default: 'Mona'
+        default: "Ankit Mittal"
+      test_level:
+        description: Select the test level
+        required: true
+        type: choice
+        options:
+          - Default
+          - RunAllTests
+          - RunLocalTests
+        default: "Default"
+
 
 jobs:
-  validate:
+  PrintValues:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
-      - name: checkout code
-        uses: actions/checkout@v4
-      - name: Greet the input user  
-        run: echo Hello ${{github.event.inputs.name}}
+      - name: Print Inputs
+        run: |
+          echo Name is ${{github.event.inputs.name}}
+          echo Test level is ${{github.event.inputs.test_level}}
+
+      - name: Checkout code
+        uses: actions/checkout@v5
