@@ -27,6 +27,14 @@ jobs:
         run: |
           echo Name is ${{github.event.inputs.name}}
           echo Test level is ${{github.event.inputs.test_level}}
+          git status
+          say "hello ${{github.event.inputs.name}}"
 
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: tun git status after code checkout
+        run: |
+          git status
+          git branch
+          say "Code checkout completed"
