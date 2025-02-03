@@ -47,5 +47,5 @@ jobs:
       - name: do random stuff
         run: |
           echo "lets print the github object!"
-          #echo ${{toJson(github)}} dont know why this step is pinting but also giving error so i'm commenting this step
+          # echo ${{toJson(github)}} dont know why this step is pinting but also giving error so i'm commenting this step
  
