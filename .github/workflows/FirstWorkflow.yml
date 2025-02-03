@@ -1,11 +1,17 @@
-name: Salesforce CI CD Workflow
+name: This is the name of workflow/github action
 
 on:
   workflow_dispatch:
+    inputs:
+      name:
+        description: 'Name of the person to greet'
+        required: true
+        default: 'Mona'
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - name: "Print Hello world"
-        run: echo "Hello world!!!"
+      - name: checkout code
+        uses: actions/checkout@v4
+        run: echo Hello ${{github.event.inputs.name}}
