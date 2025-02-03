@@ -47,4 +47,4 @@ jobs:
       - name: do random stuff
         run: |
           echo "lets print the github object!"
-          echo ${{toJson(github)}}
+          echo ${{toJson(github.event)}}
