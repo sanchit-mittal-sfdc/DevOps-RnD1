@@ -6,7 +6,7 @@ on:
       - main
       - feature/**
     paths:
-      - force-app/
+      - force-app/**
 
   workflow_dispatch:
     inputs:
