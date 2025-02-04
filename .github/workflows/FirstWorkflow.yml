@@ -5,7 +5,7 @@ on:
     branches:
       - main
       - feature/**
-    paths-ignore:
+    paths:
       - force-app/
 
   workflow_dispatch:
