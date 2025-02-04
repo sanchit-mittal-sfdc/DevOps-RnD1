@@ -1,5 +1,5 @@
 public with sharing class CiCdRnD {
-    public test CiCdRnD() {
+    public CiCdRnD() {
 
     }
 }

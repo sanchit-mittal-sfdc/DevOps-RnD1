@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - feature/**
+    # paths-ignore: is used to ignore the files and folders  
     paths:
       - force-app/**
 
