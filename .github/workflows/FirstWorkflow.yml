@@ -25,8 +25,30 @@ on:
           - RunLocalTests
         default: "Default"
 
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - closed
 
 jobs:
+
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: run apex test only if PR is raised from uat to main
+        if: github.event_name == 'pull_request' && github.event.action == 'opened' && github.event.pull_request.base.ref == 'main' && github.event.pull_request.head.ref == 'uat'
+        run: |
+          echo "sample text" >> testfile.txt
+          
 
   PrintValues:
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
