@@ -43,7 +43,8 @@ jobs:
           fetch-depth: 0  # Ensures full commit history is available
 
       - name: Run Apex tests if PR is from UAT to Main
-        if: github.event_name == 'pull_request' && contains(['opened', 'synchronize'], github.event.action) && github.event.pull_request.base.ref == 'main' && github.event.pull_request.head.ref == 'uat'
+        if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize') &&github.event.pull_request.base.ref == 'main' &&github.event.pull_request.head.ref == 'uat'
+
         run: |
           echo "Running tests..."
           echo "sample text" >> testfile.txt  # Simulate test execution
@@ -68,6 +69,7 @@ jobs:
 
   jobtwo:
     needs: PrintValues  # Runs only after PrintValues job completes successfully
+    if: success()  # Run only if the previous job is successful
     runs-on: ubuntu-latest
     steps:
       - name: Execute additional tasks
