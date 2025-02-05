@@ -75,5 +75,3 @@ jobs:
       - name: Execute additional tasks
         run: |
           echo "Executing additional steps..."
-          echo "GitHub object is partially printed:"
-          # Uncomment this if needed: echo "${{ toJson(github) }}"
