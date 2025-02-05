@@ -1,79 +1,77 @@
-name: Github Workflow1
+name: Github Workflow1  # Name of the GitHub Actions workflow
 
 on:
   push:
     branches:
-      - main
-      - feature/**
-    # paths-ignore: is used to ignore the files and folders  
+      - main  # Trigger workflow when code is pushed to the main branch
+      - feature/**  # Trigger when pushing to any feature branch (e.g., feature/login)
     paths:
-      - force-app/**
+      - force-app/**  # Run the workflow only if files in the force-app directory change
 
-  workflow_dispatch:
+  workflow_dispatch:  # Allows manual execution from the GitHub Actions UI
     inputs:
       name:
-        description: Name of the person to greet
-        required: true
-        default: "Ankit Mittal"
+        description: 'Name of the person to greet'  # Input description shown in UI
+        required: true  # Input must be provided
+        default: 'Ankit Mittal'  # Default value if the user does not enter anything
       test_level:
-        description: Select the test level
-        required: true
-        type: choice
+        description: 'Select the test level'  # Describes the purpose of this input
+        required: true  # Input is required
+        type: choice  # User can select from a dropdown list
         options:
           - Default
           - RunAllTests
           - RunLocalTests
-        default: "Default"
+        default: 'Default'
 
   pull_request:
     branches:
-      - main
+      - main  # Run workflow when a PR is opened against the main branch
     types:
-      - opened
-      - synchronize
-      - reopened
-      - closed
+      - opened  # Trigger when a new PR is created
+      - synchronize  # Trigger when commits are pushed to an existing PR
+      - reopened  # Trigger when a previously closed PR is reopened
+      - closed  # Trigger when a PR is merged or closed
 
 jobs:
-
   validate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Runs on the latest Ubuntu Linux environment
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  # Fetch the repository code
         with:
-          fetch-depth: 0
-      
-      - name: run apex test only if PR is raised from uat to main
-        if: github.event_name == 'pull_request' && github.event.action == 'opened' && github.event.pull_request.base.ref == 'main' && github.event.pull_request.head.ref == 'uat'
+          fetch-depth: 0  # Ensures full commit history is available
+
+      - name: Run Apex tests if PR is from UAT to Main
+        if: github.event_name == 'pull_request' && contains(['opened', 'synchronize'], github.event.action) && github.event.pull_request.base.ref == 'main' && github.event.pull_request.head.ref == 'uat'
         run: |
-          echo "sample text" >> testfile.txt
-          
+          echo "Running tests..."
+          echo "sample text" >> testfile.txt  # Simulate test execution
 
   PrintValues:
-    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'  # Run on manual or push events
     runs-on: ubuntu-latest
     steps:
       - name: Print Inputs
         run: |
-          echo Name is ${{github.event.inputs.name}}
-          echo Test level is ${{github.event.inputs.test_level}}
-          echo github actor is ${{github.actor}}
-        # git status - this will throw error
+          echo "Name is ${{ github.event.inputs.name || 'Default Name' }}"  # Prints the provided name, defaults if empty
+          echo "Test level is ${{ github.event.inputs.test_level }}"  # Prints the selected test level
+          echo "GitHub actor is ${{ github.actor }}"  # Prints the username who triggered the workflow
 
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  # Fetch repository code
 
-      - name: run git status after code checkout
+      - name: Run git status after code checkout
         run: |
-          git status
-          git branch
+          git status  # Displays the current branch and changes
+          git branch  # Lists all local branches
 
   jobtwo:
-    needs: PrintValues
+    needs: PrintValues  # Runs only after PrintValues job completes successfully
     runs-on: ubuntu-latest
     steps:
-      - name: do random stuff
+      - name: Execute additional tasks
         run: |
-          echo "lets print the github object!"
- 
+          echo "Executing additional steps..."
+          echo "GitHub object is partially printed:"
+          # Uncomment this if needed: echo "${{ toJson(github) }}"
